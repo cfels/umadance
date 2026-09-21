@@ -1,0 +1,123 @@
+{
+  "name": "umadance",
+  "displayName": "umadance",
+  "description": "an uma's from umamusume dancing around ur work enviroment.",
+  "publisher": "moxiu",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.137.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onWebviewPanel:umadance.floor",
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "umadance.open",
+        "title": "Open the dance floor",
+        "category": "Uma Dance"
+      },
+      {
+        "command": "umadance.close",
+        "title": "Close the dance floor",
+        "category": "Uma Dance"
+      },
+      {
+        "command": "umadance.scatter",
+        "title": "Shuffle the uma around",
+        "category": "Uma Dance"
+      },
+      {
+        "command": "umadance.toggleLock",
+        "title": "Lock every uma in place, or let them loose",
+        "category": "Uma Dance"
+      },
+      {
+        "command": "umadance.reset",
+        "title": "Pick a new line-up of uma",
+        "category": "Uma Dance"
+      },
+      {
+        "command": "umadance.installOverlay",
+        "title": "Put the uma over this VS Code window",
+        "category": "Uma Dance"
+      },
+      {
+        "command": "umadance.removeOverlay",
+        "title": "Take the uma overlay out of this VS Code",
+        "category": "Uma Dance"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "umadance.open",
+        "key": "ctrl+alt+u",
+        "mac": "cmd+alt+u"
+      },
+      {
+        "command": "umadance.toggleLock",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l"
+      }
+    ],
+    "configuration": {
+      "title": "Uma Dance",
+      "properties": {
+        "umadance.umaCount": {
+          "type": "number",
+          "default": 6,
+          "minimum": 1,
+          "maximum": 30,
+          "description": "How many uma come out onto a fresh dance floor."
+        },
+        "umadance.scale": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0.4,
+          "maximum": 1.6,
+          "description": "How big the uma are on a fresh dance floor."
+        },
+        "umadance.startLocked": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the uma start locked in place on a fresh dance floor."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.137.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  }
+}
