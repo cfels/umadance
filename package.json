@@ -3,6 +3,10 @@
   "displayName": "umadance",
   "description": "an uma's from umamusume dancing around ur work enviroment.",
   "publisher": "moxiu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfels/umadance.git"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.137.0"
@@ -19,37 +23,27 @@
     "commands": [
       {
         "command": "umadance.open",
-        "title": "Open the dance floor",
+        "title": "open menu",
         "category": "Uma Dance"
       },
       {
         "command": "umadance.close",
-        "title": "Close the dance floor",
-        "category": "Uma Dance"
-      },
-      {
-        "command": "umadance.scatter",
-        "title": "Shuffle the uma around",
+        "title": "close menu",
         "category": "Uma Dance"
       },
       {
         "command": "umadance.toggleLock",
-        "title": "Lock every uma in place, or let them loose",
-        "category": "Uma Dance"
-      },
-      {
-        "command": "umadance.reset",
-        "title": "Pick a new line-up of uma",
+        "title": "lock uma",
         "category": "Uma Dance"
       },
       {
         "command": "umadance.installOverlay",
-        "title": "Put the uma over this VS Code window",
+        "title": "install the uma overlay",
         "category": "Uma Dance"
       },
       {
         "command": "umadance.removeOverlay",
-        "title": "Take the uma overlay out of this VS Code",
+        "title": "remove the uma overlay",
         "category": "Uma Dance"
       }
     ],
@@ -91,33 +85,27 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run package",
-    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "vscode:prepublish": "bun run package",
+    "compile": "bun run check-types && bun run lint && node esbuild.js",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
-    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "package": "bun run check-types && bun run lint && node esbuild.js --production",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "clean": "rm -rf dist out *.vsix",
+    "vsix": "bunx @vscode/vsce package --no-dependencies"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.10",
     "@types/node": "24.x",
     "@types/vscode": "^1.137.0",
-    "@vscode/test-cli": "^0.0.15",
-    "@vscode/test-electron": "^3.0.0",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.1"
   },
-  "overrides": {
-    "diff": "^8.0.4",
-    "serialize-javascript": "^7.0.6"
+  "dependencies": {
+    "secret-tool": "^1.0.0"
   }
 }

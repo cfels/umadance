@@ -4,13 +4,13 @@ set -euo pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 
 if [ ! -d node_modules ]; then
-	pnpm install
+	bun install
 fi
 
-pnpm run package
+bun run package
 
 if [ "${1:-}" = "--vsix" ]; then
-	pnpm dlx --allow-build=@vscode/vsce-sign @vscode/vsce package --allow-missing-repository
+	bun run vsix
 	echo "vsix: $(ls -1t ./*.vsix | head -1)"
 else
 	echo "built: $(pwd)/dist/extension.js"
