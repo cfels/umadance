@@ -5,6 +5,40 @@
 
 </div>
 
+### Compile extension
+
+**VS Code (any OS)**
+
+just run:
+
+```
+./build-ext.sh --vsix
+```
+
+
+**NixOS / Nix**
+
+add this flake:
+
+```nix
+inputs.umadance = {
+  url = "github:cfels/umadance";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
+```
+
+Then enable the module for a patched `programs.vscode`:
+
+```nix
+modules = [ umadance.nixosModules.default { programs.umadance.enable = true; } ];
+```
+
+Or just apply the overlay, if you would rather keep `pkgs.vscode` patched globally:
+
+```nix
+nixpkgs.overlays = [ umadance.overlays.default ];
+```
+
 ### Usage
 INSERT - to open/close the menu
 

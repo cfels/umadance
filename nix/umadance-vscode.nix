@@ -1,18 +1,19 @@
-{ pkgs, lib, config, ... }:
-
+{ src }:
+{
+  config,
+  lib,
+  ...
+}:
 let
-	project = /home/moxiu/projects/umadance/umadance;
-	overlay = final: prev: {
-		vscode = prev.vscode.overrideAttrs (old: {
-			postInstall = (old.postInstall or "") + ''
-				${final.nodejs}/bin/node ${project}/overlay/apply.js \
-					--app-dir "$out/lib/vscode/resources/app" \
-					--overlay-dir ${project}/overlay \
-					--uma-dir ${project}/src/uma
-			'';
-		});
-	};
+  cfg = config.programs.umadance;
 in
 {
-	nixpkgs.overlays = [ overlay ];
+  options.programs.umadance = {
+    enable = lib.mkEnableOption "the uma overlay in VS Code";
+  };
+
+  config = lib.mkIf cfg.enable {
+    nixpkgs.overlays = [ (import ./overlay.nix { inherit src; }) ];
+    programs.vscode.enable = lib.mkDefault true;
+  };
 }
