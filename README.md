@@ -5,17 +5,10 @@
 
 </div>
 
-### Compile extension
+### Add to VSCode
+[moxiu.Umadance | VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=moxiu.umadance)
 
-**VS Code (any OS)**
-
-just run:
-
-```
-./build-ext.sh --vsix
-```
-
-
+if you are on NixOS then do this:<br>
 **NixOS / Nix**
 
 add this flake:
@@ -37,6 +30,16 @@ Or just apply the overlay, if you would rather keep `pkgs.vscode` patched global
 
 ```nix
 nixpkgs.overlays = [ umadance.overlays.default ];
+```
+
+### Compile extension
+
+**VS Code (any OS)**
+
+just run:
+
+```
+./build-ext.sh --vsix
 ```
 
 ### Usage
