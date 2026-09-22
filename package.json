@@ -94,7 +94,8 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "clean": "rm -rf dist out *.vsix",
-    "vsix": "bunx @vscode/vsce package --no-dependencies"
+    "vsix": "bunx @vscode/vsce package --no-dependencies",
+    "publish": "bunx @vscode/vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@types/node": "24.x",
@@ -104,8 +105,5 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.1"
-  },
-  "dependencies": {
-    "secret-tool": "^1.0.0"
   }
 }
