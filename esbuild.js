@@ -50,6 +50,17 @@ function copyOverlayAssets() {
 		}
 		fs.copyFileSync(path.join(from, entry), path.join(to, entry));
 	}
+	const fontFrom = path.join(from, 'fonts');
+	if (fs.existsSync(fontFrom)) {
+		const fontTo = path.join(to, 'fonts');
+		fs.mkdirSync(fontTo, { recursive: true });
+		for (const entry of fs.readdirSync(fontFrom)) {
+			const lower = entry.toLowerCase();
+			if (lower.endsWith('.woff2') || lower.endsWith('.ttf')) {
+				fs.copyFileSync(path.join(fontFrom, entry), path.join(fontTo, entry));
+			}
+		}
+	}
 }
 
 const umaAssetsPlugin = {

@@ -1,3 +1,11 @@
+@font-face {
+	font-family: 'Momo Trust';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('./fonts/momotrust.ttf');
+}
+
 #umadance-overlay {
 	position: fixed;
 	top: 0;
@@ -7,23 +15,54 @@
 	z-index: 250;
 	overflow: hidden;
 	pointer-events: none;
+	transition: opacity 180ms ease;
+}
+
+#umadance-overlay.umadance-hidden {
+	opacity: 0;
+	pointer-events: none;
 }
 
 #umadance-overlay .umadance-uma {
 	position: absolute;
-	transform: translate(-50%, -50%);
+	transform: perspective(560px) translate(-50%, -50%) translate3d(0, 0, 0) rotateX(0deg);
+	transform-origin: 50% 100%;
+	pointer-events: none;
+	user-select: none;
+	transition: opacity 120ms ease-out 40ms, transform 260ms cubic-bezier(0.16, 1.06, 0.26, 1);
+}
+
+#umadance-overlay .umadance-uma.umadance-hidden {
+	opacity: 0;
+	transform: perspective(560px) translate(-50%, -50%) translate3d(0, 9vh, -260px) rotateX(66deg);
+	transition: opacity 130ms ease-in 50ms, transform 200ms cubic-bezier(0.5, 0, 0.86, 0.42);
+}
+
+#umadance-overlay .umadance-uma .umadance-hit {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	cursor: grab;
 	pointer-events: auto;
 	touch-action: none;
-	user-select: none;
+}
+
+#umadance-overlay.umadance-hidden .umadance-uma .umadance-hit,
+#umadance-overlay .umadance-uma.umadance-hidden .umadance-hit {
+	pointer-events: none;
 }
 
 #umadance-overlay .umadance-uma.dragging {
-	cursor: grabbing;
 	z-index: 2;
 }
 
-#umadance-overlay .umadance-uma.locked {
+#umadance-overlay .umadance-uma.dragging .umadance-hit {
+	cursor: grabbing;
+}
+
+#umadance-overlay .umadance-uma.locked .umadance-hit {
 	cursor: default;
 }
 
@@ -41,31 +80,74 @@
 	min-width: 190px;
 	max-height: 62vh;
 	overflow: hidden auto;
-	border: 1.8px solid rgb(251, 194, 255);
-	border-radius: 18px;
-	background: rgba(182, 110, 234, 0.055);
-	box-shadow: 0 8px 26px rgba(83, 83, 83, 0.495);
-	backdrop-filter: blur(12px) saturate(1.2);
-	-webkit-backdrop-filter: blur(12px) saturate(1.2);
+	--umadance-edge: 3px;
+	border: var(--umadance-edge) solid rgba(255, 210, 244, 0.547);
+	border-radius: 26px;
+	corner-shape: squircle;
+	background: rgba(255, 199, 247, 0.186);
+	backdrop-filter: blur(9px) saturate(1.2);
+	-webkit-backdrop-filter: blur(10px) saturate(1.2);
 	color: #cfd6de;
-	font-family: var(--vscode-editor-font-family, ui-monospace, monospace);
-	font-size: 11px;
+	font-family: 'Momo Trust', var(--vscode-editor-font-family, ui-monospace, monospace);
+	font-size: 12.5px;
 	line-height: 1.5;
 	pointer-events: auto;
 }
 
 #umadance-menu.umadance-off {
-	display: none;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+#umadance-menu.umadance-in {
+	animation: umadance-menu-in 340ms ease-out both;
+}
+
+#umadance-menu.umadance-out {
+	animation: umadance-menu-out 240ms ease-in both;
+}
+
+@keyframes umadance-menu-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	55% {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+	78% {
+		transform: scale(0.982);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes umadance-menu-out {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	22% {
+		opacity: 0.9;
+		transform: scale(1.045);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
 }
 
 #umadance-menu .umadance-bar {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
-	padding: 4px 8px;
-	border-bottom: 1px solid rgba(243, 187, 255, 0.3);
-	background: linear-gradient(90deg, rgba(255, 186, 237, 0.16), rgba(255, 210, 249, 0.02));
+	justify-content: center;
+	padding: 6px 8px;
+	border-radius: calc(26px - var(--umadance-edge)) calc(26px - var(--umadance-edge)) 12px 12px;
+	corner-shape: squircle;
+	background: rgba(255, 201, 241, 0.181);
 	cursor: grab;
 }
 
@@ -75,15 +157,9 @@
 
 #umadance-menu .umadance-title {
 	color: #fad9f0;
-	font-size: 10px;
-	letter-spacing: 1.8px;
-	text-transform: uppercase;
-}
-
-#umadance-menu .umadance-hint {
-	color: rgba(255, 196, 249, 0.45);
-	font-size: 9px;
-	letter-spacing: 1px;
+	font-size: 14px;
+	letter-spacing: 2.4px;
+	margin-right: -2.4px;
 	text-transform: uppercase;
 }
 
@@ -100,13 +176,13 @@
 }
 
 #umadance-menu .umadance-row:hover {
-	background: rgba(255, 162, 227, 0.34);
+	background: rgba(159, 125, 149, 0.34);
 }
 
 #umadance-menu .umadance-master {
 	padding-bottom: 4px;
 	margin-bottom: 3px;
-	border-bottom: 1px solid rgba(255, 222, 238, 0.364);
+	border-bottom: 4.5px solid rgba(255, 210, 244, 0.547);
 }
 
 #umadance-menu .umadance-master span {
@@ -121,10 +197,11 @@
 	width: 10px;
 	height: 10px;
 	margin: 0;
-	border: 1px solid rgba(253, 190, 232, 0.5);
-	border-radius: 2px;
-	background: rgba(255, 45, 161, 0.368);
+	border-radius: 3px;
+	corner-shape: squircle;
+	background: rgba(255, 163, 214, 0.393);
 	cursor: pointer;
+	transition: background 120ms ease, border-color 120ms ease;
 }
 
 #umadance-menu .umadance-row input:checked {
@@ -132,8 +209,52 @@
 	background: #ffaec4;
 }
 
+#umadance-menu .umadance-row input.umadance-pop-in {
+	animation: umadance-box-in 280ms cubic-bezier(0.2, 1.2, 0.3, 1) both;
+}
+
+#umadance-menu .umadance-row input.umadance-pop-out {
+	animation: umadance-box-out 200ms ease-out both;
+}
+
+@keyframes umadance-box-in {
+	0% {
+		transform: scale(0.55);
+	}
+	55% {
+		transform: scale(1.45);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes umadance-box-out {
+	0% {
+		transform: scale(1);
+	}
+	45% {
+		transform: scale(0.7);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
 #umadance-menu .umadance-row span {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#umadance-overlay,
+	#umadance-overlay .umadance-uma,
+	#umadance-menu,
+	#umadance-menu.umadance-in,
+	#umadance-menu.umadance-out,
+	#umadance-menu .umadance-row input {
+		animation: none;
+		transition: none;
+	}
 }

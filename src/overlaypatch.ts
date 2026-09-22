@@ -7,6 +7,8 @@ const endMarker = '<!-- umadance:end -->';
 const checksumKey = 'vs/code/electron-browser/workbench/workbench.html';
 const workbenchSegments = ['out', 'vs', 'code', 'electron-browser', 'workbench'];
 const overlayFiles = ['uma-overlay.css', 'uma-overlay.js'];
+const fontDirectory = 'fonts';
+const fontFiles = ['momotrust.ttf'];
 const block = [
 	startMarker,
 	'<link rel="stylesheet" href="./uma-overlay.css">',
@@ -59,6 +61,18 @@ function syncUma(sourceDirectory: string, targetDirectory: string): { changed: b
 	return { changed, names };
 }
 
+function syncFonts(sourceDirectory: string, targetDirectory: string): boolean {
+	const target = path.join(targetDirectory, fontDirectory);
+	fs.mkdirSync(target, { recursive: true });
+	let changed = false;
+	for (const name of fontFiles) {
+		if (copyIfChanged(path.join(sourceDirectory, fontDirectory, name), path.join(target, name))) {
+			changed = true;
+		}
+	}
+	return changed;
+}
+
 function writeManifest(workbench: string, names: string[]): boolean {
 	const manifestPath = path.join(workbench, 'uma-assets.js');
 	const manifest = 'window.__umadanceAssets = ' + JSON.stringify(names) + ';\n';
@@ -106,6 +120,9 @@ export function applyOverlay(appRoot: string, assetRoot: string): OverlayResult 
 				changed = true;
 			}
 		}
+		if (syncFonts(path.join(assetRoot, 'overlay'), workbench)) {
+			changed = true;
+		}
 		const html = fs.readFileSync(htmlPath, 'utf-8');
 		if (!html.includes(startMarker)) {
 			fs.writeFileSync(htmlPath, inject(html));
@@ -135,6 +152,7 @@ export function removeOverlay(appRoot: string): OverlayResult {
 		fs.writeFileSync(htmlPath, cleaned);
 		writeChecksum(appRoot, htmlPath);
 		fs.rmSync(path.join(workbench, 'uma'), { recursive: true, force: true });
+		fs.rmSync(path.join(workbench, fontDirectory), { recursive: true, force: true });
 		for (const name of [...overlayFiles, 'uma-assets.js']) {
 			fs.rmSync(path.join(workbench, name), { force: true });
 		}

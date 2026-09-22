@@ -6,6 +6,7 @@ const path = require('path');
 const START_MARKER = '<!-- umadance:start -->';
 const END_MARKER = '<!-- umadance:end -->';
 const EXTERNAL_FILES = ['uma-overlay.css', 'uma-overlay.js'];
+const FONT_FILES = ['momotrust.ttf'];
 const WORKBENCH_DIR = ['out', 'vs', 'code', 'electron-browser', 'workbench'];
 const CHECKSUM_KEY = 'vs/code/electron-browser/workbench/workbench.html';
 const BLOCK = [
@@ -67,6 +68,10 @@ function main() {
 	const names = syncUma(umaDir, path.join(workbench, 'uma'));
 	for (const name of EXTERNAL_FILES) {
 		fs.copyFileSync(path.join(overlayDir, name), path.join(workbench, name));
+	}
+	fs.mkdirSync(path.join(workbench, 'fonts'), { recursive: true });
+	for (const name of FONT_FILES) {
+		fs.copyFileSync(path.join(overlayDir, 'fonts', name), path.join(workbench, 'fonts', name));
 	}
 	fs.writeFileSync(path.join(workbench, 'uma-assets.js'), 'window.__umadanceAssets = ' + JSON.stringify(names) + ';\n');
 	fs.writeFileSync(htmlPath, inject(fs.readFileSync(htmlPath, 'utf-8')));
