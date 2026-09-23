@@ -51,7 +51,7 @@ INSERT - to open/close the menu
   <tr>
     <td>
       <img src="./screenshots/menuitself.png" width="450"><br><br>
-      <img src="./screenshots/umas%2Bmenu.png" width="450"><br><br>
+      <img src="./screenshots/umasmenu.png" width="450"><br><br>
       <img src="./screenshots/umas.png" width="450">
     </td>
   </tr>
