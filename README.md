@@ -50,9 +50,9 @@ INSERT - to open/close the menu
 <table border="0">
   <tr>
     <td>
-      <img src="https://github.com/cfels/umadance/blob/68f66aed5af4d15c78100eabc050ab38c55cce5a/screenshots/menuitself.png" width="450"><br><br>
-      <img src="https://github.com/cfels/umadance/blob/68f66aed5af4d15c78100eabc050ab38c55cce5a/screenshots/umas%2Bmenu.png" width="450"><br><br>
-      <img src="https://github.com/cfels/umadance/blob/68f66aed5af4d15c78100eabc050ab38c55cce5a/screenshots/umas.png" width="450">
+      <img src="https://raw.githubusercontent.com/cfels/umadance/68f66aed5af4d15c78100eabc050ab38c55cce5a/screenshots/menuitself.png" width="450"><br><br>
+      <img src="https://raw.githubusercontent.com/cfels/umadance/68f66aed5af4d15c78100eabc050ab38c55cce5a/screenshots/umas%2Bmenu.png" width="450"><br><br>
+      <img src="https://raw.githubusercontent.com/cfels/umadance/68f66aed5af4d15c78100eabc050ab38c55cce5a/screenshots/umas.png" width="450">
     </td>
   </tr>
 </table>

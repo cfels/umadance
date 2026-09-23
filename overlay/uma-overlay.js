@@ -475,9 +475,6 @@
 		applyMenuPosition();
 		syncMenu();
 		window.setTimeout(syncMenu, 500);
-		window.requestAnimationFrame(function () {
-			setMenuOpen(true);
-		});
 	}
 
 	function syncMenu() {
