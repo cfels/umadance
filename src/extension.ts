@@ -6,9 +6,12 @@ import { applyOverlay, removeOverlay, type OverlayResult } from './overlaypatch'
 
 let statusBar: vscode.StatusBarItem | undefined;
 
-async function runOverlayAction(result: OverlayResult): Promise<void> {
+async function runOverlayAction(result: OverlayResult, quiet = false): Promise<void> {
 	const workbench = result.workbench;
 	if (result.status === 'unavailable') {
+		if (quiet) {
+			return;
+		}
 		const answer = await vscode.window.showWarningMessage(
 			'Uma Dance: this VS Code install is not writable, so the uma cannot float over the window (' + (result.detail ?? 'unknown error') + '). A per-user VS Code install works; system packages and read-only installs do not.',
 			'Copy path'
@@ -75,7 +78,7 @@ export function activate(context: vscode.ExtensionContext): void {
 	const assetRoot = path.join(context.extensionPath, 'dist');
 	const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
 
-	void runOverlayAction(applyOverlay(vscode.env.appRoot, assetRoot));
+	void runOverlayAction(applyOverlay(vscode.env.appRoot, assetRoot), true);
 
 	statusBar = status;
 	status.command = 'umadance.toggleLock';

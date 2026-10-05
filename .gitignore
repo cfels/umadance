@@ -1,6 +1,7 @@
 dist
 node_modules
 *.vsix
+.env
 __pycache__/
 *.pyc
 .DS_Store

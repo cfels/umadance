@@ -7,8 +7,10 @@ src/**
 overlay/**
 nix/**
 dev/**
+scripts/**
 screenshots/**
 .gitignore
+.env
 .yarnrc
 flake.nix
 flake.lock

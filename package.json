@@ -8,9 +8,9 @@
     "type": "git",
     "url": "https://github.com/cfels/umadance.git"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
-    "vscode": "^1.137.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Other"
@@ -86,7 +86,8 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "bun run package",
+    "pin-engines": "node scripts/pin-engines.js",
+    "vscode:prepublish": "bun run pin-engines && bun run package",
     "compile": "bun run check-types && bun run lint && node esbuild.js",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
@@ -95,12 +96,15 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "clean": "rm -rf dist out *.vsix",
-    "vsix": "bunx @vscode/vsce package --no-dependencies",
-    "publish": "bunx @vscode/vsce publish --no-dependencies"
+    "vsix": "bun run pin-engines && bunx @vscode/vsce package --no-dependencies",
+    "publish": "node scripts/publish.js --marketplace",
+    "publish:ovsx": "node scripts/publish.js --ovsx",
+    "publish:all": "node scripts/publish.js",
+    "namespace:ovsx": "node scripts/publish.js --create-namespace"
   },
   "devDependencies": {
     "@types/node": "24.x",
-    "@types/vscode": "^1.137.0",
+    "@types/vscode": "1.75.0",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
     "npm-run-all": "^4.1.5",
