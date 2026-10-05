@@ -32,6 +32,7 @@
         {
           default = pkgs.vscode;
           umadance-vscode = pkgs.vscode;
+          umadance-vscodium = pkgs.vscodium;
         }
       );
 
